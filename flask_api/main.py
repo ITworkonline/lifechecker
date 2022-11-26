@@ -1,7 +1,5 @@
 from flask import Flask, request
 from datetime import datetime
-
-import requests
 app = Flask(__name__)
 
 """
@@ -34,11 +32,46 @@ def list_habits():
     return {"habits_list":list(habit_dict.values())}
 
 """
-Concrete creat new habit
+Concrete create new habit
 """
 def create_habit(new_habit):
     habit_name = new_habit['name']
     habit_dict[habit_name] = new_habit
     return new_habit
 
+"""
+API call based on GET, PUT, DELETE
+GET: Get habit's attributes
+PUT: Update the habit by name
+DELETE: Delete the habit by name
+"""
+@app.route('/habitslist/<habit_name>', methods=['GET', 'PUT', 'DELETE'])
+def programming_language_route(habit_name):
+   if request.method == 'GET':
+       return get_habit_attributes(habit_name)
+   elif request.method == "PUT":
+       return update_habit(habit_name, request.get_json(force=True))
+   elif request.method == "DELETE":
+       return delete_programming_language(habit_name)
 
+"""
+Concrete get attributes by habit name
+"""
+def get_habit_attributes(habit_name):
+   return habit_dict[habit_name]
+
+"""
+Concrete update habit attributes by its name
+"""
+def update_habit(habit_name, new_habit_attributes):
+   habit = habit_dict[habit_name]
+   habit.update(new_habit_attributes)
+   return habit
+
+"""
+Concrete delete habit by its name
+"""
+def delete_programming_language(habit_name):
+   deleting_habit = habit_dict[habit_name]
+   del habit_dict[habit_name]
+   return deleting_habit
