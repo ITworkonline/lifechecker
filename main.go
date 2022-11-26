@@ -3,20 +3,27 @@ package main
 import (
 	"errors"
 	"net/http"
+	"time"
 
 	"github.com/gin-gonic/gin"
 )
 
+// data structure
 type todo struct {
-	ID        string `json:"id"`
-	Item      string `json:"item"`
-	Completed bool   `json:"completed"`
+	ID         string    `json:"id"`
+	Item       string    `json:"item"`
+	CreateTime time.Time `json:"createtime"`
+	FinishTime time.Time `json:"finishtime"`
+	Frequency  string    `json:"frequency"`
+	Threshold  int       `json:"threshold"`
+	Completed  bool      `json:"completed"`
 }
 
+// fake data
 var todos = []todo{
-	{ID: "1", Item: "Clean Room", Completed: true},
-	{ID: "2", Item: "Read Book", Completed: false},
-	{ID: "3", Item: "Work out", Completed: false},
+	{ID: "1", Item: "Work out", CreateTime: time.Now(), Frequency: "weekly", Threshold: 80, Completed: true},
+	{ID: "2", Item: "Reading books", CreateTime: time.Now(), Frequency: "monthly", Threshold: 50, Completed: false},
+	{ID: "3", Item: "Sports", CreateTime: time.Now(), Frequency: "monthly", Threshold: 20, Completed: false},
 }
 
 func getTodos(context *gin.Context) {
