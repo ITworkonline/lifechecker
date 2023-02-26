@@ -6,6 +6,7 @@
 xcuserdata/
 flask_api/__pycache__
 flask_api/venv
+flask_react/node_modules
 
 ## compatibility with Xcode 8 and earlier (ignoring not required starting Xcode 9)
 *.xcscmblueprint

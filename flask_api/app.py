@@ -14,6 +14,17 @@ habit_dict = {
 }
 
 """
+About page: test the endpoint
+"""
+@app.route('/about')
+def about_route():
+    response_body = {
+        "name": "Jie",
+        "about" :"Hello! I'm a full stack developer that loves python and javascript"
+    }
+    return response_body
+
+"""
 API call based on GET or POST
 GET: List of habits
 POST: Create new habit
@@ -34,6 +45,7 @@ def list_habits():
 """
 Concrete create new habit
 """
+@app.route('/addhabits', methods=['GET', 'POST'])
 def create_habit(new_habit):
     habit_name = new_habit['name']
     habit_dict[habit_name] = new_habit
