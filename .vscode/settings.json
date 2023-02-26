@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/839533cc-1161-4737-8afc-f9bb3da95dff/resourceGroups/appsvc_linux_centralus/providers/Microsoft.Web/sites/testlifechecker-eastus",
+    "appService.deploySubpath": "flask_api"
+}
