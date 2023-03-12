@@ -40,7 +40,7 @@ def habits_route():
 Concrete list of habits method
 """
 def list_habits():
-    return {"habits_list":list(habit_dict.values())}
+    return {"habits_list":habit_dict}
 
 """
 Concrete create new habit
@@ -54,17 +54,23 @@ def create_habit(new_habit):
 """
 Concrete update the habit based on id
 """
-@app.route('/update_habit/<int:id>', methods=['PUT'])
+@app.route('/update_habit/<int:id>', methods=['GET','PUT'])
 def update_todo_item(id):
     # Get the request data
-    data = request.get_json()
+    data = {
+            "name": "Writing the code", 
+            "createTime": datetime.now(), 
+            "frequency": "daily",
+            "threshold":50, 
+            "completed":True
+            }
 
     # Check if todo item with the given ID exists
     if id not in habit_dict:
         return jsonify({"message": "Todo item not found"}), 404
 
     # Update the todo item
-    habit_dict[id]["task"] = data["task"]
+    habit_dict[id]["name"] = data["name"]
 
     # Return the updated todo item
     return jsonify({"habit_modified": habit_dict[id]}), 200
