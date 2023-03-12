@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, jsonify
 from datetime import datetime
 app = Flask(__name__)
 
@@ -8,9 +8,9 @@ Length of data: 3
 Attributes: name, createTime, frequency, threshold, completed
 """
 habit_dict = {
-   "Work out" : {"name": "Work out", "createTime": datetime.now(), "frequency": "weekly", "threshold":80, "completed":True},
-   "Reading books" : {"name": "Reading books", "createTime": datetime.now(), "frequency": "monthly", "threshold":50, "completed":True},
-   "Sports" : {"name": "Sports", "createTime": datetime.now(), "frequency": "monthly", "threshold":20, "completed":False},
+   1 : {"name": "Work out", "createTime": datetime.now(), "frequency": "weekly", "threshold":80, "completed":True},
+   2 : {"name": "Reading books", "createTime": datetime.now(), "frequency": "monthly", "threshold":50, "completed":True},
+   3: {"name": "Sports", "createTime": datetime.now(), "frequency": "monthly", "threshold":20, "completed":False},
 }
 
 """
@@ -50,6 +50,24 @@ def create_habit(new_habit):
     habit_name = new_habit['name']
     habit_dict[habit_name] = new_habit
     return new_habit
+
+"""
+Concrete update the habit based on id
+"""
+@app.route('/update_habit/<int:id>', methods=['PUT'])
+def update_todo_item(id):
+    # Get the request data
+    data = request.get_json()
+
+    # Check if todo item with the given ID exists
+    if id not in habit_dict:
+        return jsonify({"message": "Todo item not found"}), 404
+
+    # Update the todo item
+    habit_dict[id]["task"] = data["task"]
+
+    # Return the updated todo item
+    return jsonify({"habit_modified": habit_dict[id]}), 200
 
 """
 API call based on GET, PUT, DELETE
